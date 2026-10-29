@@ -23,7 +23,13 @@ all of them in one place:
   server's events only.
 - **Test now.** This starts any configured server on its own and checks its
   MCP handshake, even if no client is running it.
-- **Remote servers** (HTTP/SSE) are checked for reachability.
+- **Remote servers** (HTTP/SSE) are checked for reachability. For servers
+  configured in Claude Code, Claude Code itself is asked, because it holds
+  their login.
+- **Show config.** Each server's command, URL and environment variable names
+  are shown, with passwords and environment values masked.
+
+![Top-bar menu](docs/screenshots/menu.png)
 
 ## How it works
 
@@ -91,6 +97,7 @@ Project-level `.mcp.json` files are shared through git and are never rewritten.
 | server → Restart / Restart all red | `mcp-keeper restart <id>` / `--all-red` |
 | server → Test now | `mcp-keeper test <id>` |
 | Live log… | `mcp-keeper logs [<id>] -f` |
+| server → Show config… | `mcp-keeper show <id>` |
 | Wrap / Unwrap all servers… | `mcp-keeper wrap` / `unwrap` (`--client`, names, `--dry-run`) |
 | Config backups… → Restore | `mcp-keeper backups`, `mcp-keeper restore <stamp>` |
 
@@ -104,6 +111,12 @@ Project-level `.mcp.json` files are shared through git and are never rewritten.
 | ⚫ | not wrapped: MCP Keeper can't see it |
 
 A server id looks like `claude-code:user:orders-db` or `codex:user:notes`.
+
+![Live log](docs/screenshots/live-log.png)
+
+| Show config | Config backups |
+|---|---|
+| ![Show config](docs/screenshots/config.png) | ![Config backups](docs/screenshots/backups.png) |
 
 ## Supported clients
 
@@ -124,6 +137,7 @@ A server id looks like `claude-code:user:orders-db` or `codex:user:notes`.
 packaging/build-deb.sh                       # → dist/mcp-keeper_<version>_all.deb
 python3 -m venv --system-site-packages .venv && .venv/bin/pip install pytest pytest-cov tomlkit
 .venv/bin/python -m pytest --cov
+python3 docs/screenshots/generate.py      # regenerate the README screenshots (demo data)
 ```
 
 ## License
