@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+if [ "$1" = "remove" ]; then
+    systemctl --global disable mcp-keeper.service >/dev/null 2>&1 || true
+    # Clients whose configs still point at the shim would lose their MCP servers once it is
+    # gone: restore the original commands for every user who wrapped (each config is backed
+    # up first, and edited as that user).
+    getent passwd | while IFS=: read -r user _ uid _ _ home _; do
+        [ "$uid" -ge 1000 ] 2>/dev/null || [ "$user" = "root" ] || continue
+        [ -d "$home" ] || continue
+        if grep -qs "mcp-keeper-shim" "$home/.claude.json" "$home/.codex/config.toml" \
+            "$home/.cursor/mcp.json" "$home/.config/Claude/claude_desktop_config.json" \
+            "$home/.codeium/windsurf/mcp_config.json" "$home/.gemini/antigravity/mcp_config.json" \
+            "$home/.gemini/settings.json" "$home/.config/Code/User/mcp.json"; then
+            if runuser -u "$user" -- env HOME="$home" /usr/bin/mcp-keeper unwrap >/dev/null 2>&1; then
+                echo "mcp-keeper: restored the original MCP server commands for $user"
+            else
+                echo "mcp-keeper: could not unwrap $user's configs — run 'mcp-keeper unwrap' as $user first"
+            fi
+        fi
+    done
+fi
+exit 0

@@ -1,0 +1,18 @@
+[Unit]
+Description=Watch and heal the MCP servers of every AI client (mcp-keeper)
+Documentation=file:///usr/share/doc/mcp-keeper/README.md
+StartLimitIntervalSec=300
+StartLimitBurst=10
+
+[Service]
+Type=simple
+ExecStart=/usr/lib/mcp-keeper/mcp-keeperd
+ExecReload=/bin/kill -HUP $MAINPID
+Environment=PYTHONUNBUFFERED=1
+Restart=on-failure
+RestartSec=5
+# 78 = another instance already running: restarting would not help.
+RestartPreventExitStatus=78
+
+[Install]
+WantedBy=default.target

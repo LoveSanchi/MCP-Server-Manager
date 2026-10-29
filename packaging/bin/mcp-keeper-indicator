@@ -1,0 +1,8 @@
+#!/usr/bin/python3 -I
+# -I: ignore PYTHONPATH and user site-packages — clients set those for their own servers.
+import sys
+
+sys.path.insert(0, "/usr/lib/mcp-keeper")
+from mcp_keeper.indicator.app import main  # noqa: E402
+
+sys.exit(main())

@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+    rm -rf /usr/lib/mcp-keeper  # compiled .pyc files dpkg does not track
+fi
+exit 0

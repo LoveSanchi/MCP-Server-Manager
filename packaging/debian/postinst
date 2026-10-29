@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+if [ "$1" = "configure" ]; then
+    # Precompile: every MCP server start goes through the shim, and clients time out slow starts.
+    python3 -m compileall -q /usr/lib/mcp-keeper >/dev/null 2>&1 || true
+    systemctl --global enable mcp-keeper.service >/dev/null 2>&1 || true
+    echo "mcp-keeper: as your user, run:"
+    echo "  systemctl --user daemon-reload && systemctl --user restart mcp-keeper"
+    echo "  mcp-keeper-indicator &        # then: mcp-keeper wrap   (backs up your configs first)"
+fi
+exit 0

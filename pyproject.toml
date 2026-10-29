@@ -1,0 +1,16 @@
+[project]
+name = "mcp-keeper"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["mcp_keeper"]
+# GTK view code needs a desktop session; its logic lives in indicator/model.py (tested).
+omit = ["mcp_keeper/indicator/app.py", "mcp_keeper/indicator/windows.py"]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true

@@ -1,0 +1,14 @@
+Package: mcp-keeper
+Version: @VERSION@
+Architecture: all
+Maintainer: Arvind <arvindkumarsjpr@gmail.com>
+Section: devel
+Priority: optional
+Depends: python3 (>= 3.10), python3-gi, gir1.2-gtk-3.0, gir1.2-ayatanaappindicator3-0.1, python3-tomlkit
+Recommends: gnome-shell-extension-appindicator
+Description: see and heal the MCP servers of every AI client from the top bar
+ A small stand-in sits between each MCP client (Claude Code, Codex, Cursor,
+ Claude Desktop, Windsurf, Antigravity, Gemini CLI, VS Code) and its local
+ servers. When a server crashes or cannot start, the client stays connected and
+ the server is brought back; a top-bar indicator shows every server's health
+ with a green/total meter, live logs, one-click restart and config backups.

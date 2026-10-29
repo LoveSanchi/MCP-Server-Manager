@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=MCP Keeper
+Comment=See and heal every MCP server from the top bar
+Exec=mcp-keeper-indicator
+Icon=network-workgroup
+Terminal=false
+Categories=Development;Utility;
+X-GNOME-Autostart-enabled=true
